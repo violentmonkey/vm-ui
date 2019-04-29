@@ -8,7 +8,7 @@ const pkg = require('./package.json');
 
 const DIST = 'dist';
 const FILENAME = 'index';
-const BANNER = false;
+const BANNER = `/*! ${pkg.name} v${pkg.version} | ${pkg.license} License */`;
 
 const external = getExternal();
 const rollupConfig = [
