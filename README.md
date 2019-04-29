@@ -7,7 +7,7 @@ Common UI for userscripts in Violentmonkey.
 
 ## Dependencies
 
-- [@violentmonkey/dom](https://github.com/violentmonkey/dom)
+- [@violentmonkey/dom](https://github.com/violentmonkey/vm-dom)
 
 ## Usage
 
