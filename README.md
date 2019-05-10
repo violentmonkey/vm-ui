@@ -15,8 +15,7 @@ First, include dependencies:
 
 ```js
 // ...
-// @require https://cdn.jsdelivr.net/npm/@violentmonkey/dom@1
-// @require https://cdn.jsdelivr.net/npm/@violentmonkey/ui
+// @require https://cdn.jsdelivr.net/combine/npm/@violentmonkey/dom@1,npm/@violentmonkey/ui
 // ...
 ```
 
