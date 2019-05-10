@@ -3,8 +3,7 @@ if (typeof VM === 'undefined' || !VM || !VM.createElement) {
 [VM-UI] VM.createElement is not defined!
 Please include following code in your metadata:
 
-// @require https://cdn.jsdelivr.net/npm/@violentmonkey/dom@1
-// @require https://cdn.jsdelivr.net/npm/@violentmonkey/ui
+// @require https://cdn.jsdelivr.net/combine/npm/@violentmonkey/dom@1,npm/@violentmonkey/ui
 `);
 }
 

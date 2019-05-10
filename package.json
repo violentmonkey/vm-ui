@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.4",
-    "@gera2ld/jsx-dom": "^0.1.2"
+    "@gera2ld/jsx-dom": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"
