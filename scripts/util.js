@@ -35,9 +35,6 @@ const rollupPluginMap = {
   commonjs: () => commonjs(),
 };
 
-exports.getRollupPlugins = getRollupPlugins;
-exports.getExternal = getExternal;
-
 function getPostcssPlugins({ cssModules } = {}) {
   return [
     require('precss'),
@@ -110,3 +107,7 @@ function getRollupPlugins({ babelConfig, browser, aliases } = {}) {
 function getExternal(externals = []) {
   return id => id.startsWith('@babel/runtime/') || externals.includes(id);
 }
+
+exports.getRollupPlugins = getRollupPlugins;
+exports.getExternal = getExternal;
+exports.DIST = 'dist';

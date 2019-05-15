@@ -12,10 +12,10 @@ module.exports = {
       pragma: 'h',
     },
   },
-  rules: {
-    'import/prefer-default-export': 'off',
-  },
   globals: {
     VM: true,
+  },
+  rules: {
+    'import/prefer-default-export': 'off',
   },
 };
