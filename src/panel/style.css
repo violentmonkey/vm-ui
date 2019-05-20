@@ -1,0 +1,15 @@
+.panel {
+  position: fixed;
+  max-width: 300px;
+  z-index: 10000;
+  color: #333;
+
+  &-body {
+    position: relative;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #eaeaea;
+    background-color: #fff;
+    word-break: break-all;
+  }
+}

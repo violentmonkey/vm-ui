@@ -11,7 +11,8 @@ module.exports = {
 
     // react
     ['@babel/plugin-transform-react-jsx', {
-      pragma: 'h',
+      pragma: 'VM.createElement',
+      pragmaFrag: 'VM.Fragment',
     }],
   ].filter(Boolean),
 };

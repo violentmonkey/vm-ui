@@ -7,4 +7,16 @@ Please include following code in your metadata:
 `);
 }
 
-export const h = VM.createElement;
+export function getShadowElement() {
+  const host = <div />;
+  const root = host.attachShadow({ mode: 'open' });
+  return { host, root };
+}
+
+export function appendToBody(tag, ...children) {
+  if (!document.body) {
+    console.warn(`[${tag}] document.body is not ready yet, operation skipped.`);
+    return;
+  }
+  document.body.append(...children);
+}
