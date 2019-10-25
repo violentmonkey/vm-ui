@@ -31,15 +31,13 @@ Or use with JSX and bundlers, for example:
 // .babelrc.js
 {
   plugins: [
-    ['@babel/plugin-transform-react-jsx', {
-      pragma: 'h',
-    }],
+    '@babel/plugin-transform-react-jsx',
   ],
 }
 ```
 
 ```js
-const h = VM.createElement;
+const React = VM;
 
 VM.showToast(<div>hello, world</div>);
 ```
