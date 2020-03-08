@@ -19,7 +19,7 @@ First, include dependencies:
 // ...
 ```
 
-Then use it directly:
+Then use it like so:
 
 ```
 VM.showToast('hello');
@@ -31,27 +31,39 @@ Or use with JSX and bundlers, for example:
 // .babelrc.js
 {
   plugins: [
-    '@babel/plugin-transform-react-jsx',
+    // JSX
+    ['@babel/plugin-transform-react-jsx', {
+      pragma: 'VM.createElement',
+      pragmaFrag: 'VM.Fragment',
+    }],
   ],
 }
 ```
 
 ```js
-const React = VM;
-
 VM.showToast(<div>hello, world</div>);
 ```
 
-To initialize a project for userscript with JSX support, try [generator-rollup](https://github.com/gera2ld/generator-rollup):
+To initialize a project for userscript with JSX support, try [generator-userscript](https://github.com/violentmonkey/generator-userscript):
 
 ```sh
-$ mkdir project
-$ cd project
-$ npx -p https://github.com/gera2ld/generator-rollup.git -p yo yo @gera2ld/rollup:iife
+$ mkdir my-script
+$ cd my-script
+$ npx -p https://github.com/violentmonkey/generator-userscript.git -p yo yo @violentmonkey/userscript
 ```
 
 ## API
 
 ### VM.showToast
 
-`VM.showToast(content)`
+`VM.showToast(content, delay = 2000)`
+
+Show a toast message.
+
+The returned value is a function to close the toast immediately.
+
+### VM.getPanel
+
+`VM.getPanel({ css, content })`
+
+Create a shadow DOM.
