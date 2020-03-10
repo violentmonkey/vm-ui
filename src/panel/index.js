@@ -1,4 +1,5 @@
 import { getShadowElement, appendToBody } from '../util';
+import { css as baseCss } from '../base.css';
 import { css } from './style.css';
 
 export function getPanel(options) {
@@ -6,7 +7,7 @@ export function getPanel(options) {
   const extraStyle = <style />;
   const body = <div className="panel-body" />;
   const wrapper = <div className="panel">{body}</div>;
-  root.append(<style>{css}</style>, extraStyle, wrapper);
+  root.append(<style>{baseCss}{css}</style>, extraStyle, wrapper);
   const setCss = (cssText) => {
     extraStyle.textContent = cssText || '';
   };

@@ -15,7 +15,4 @@ module.exports = {
   globals: {
     VM: true,
   },
-  rules: {
-    'import/prefer-default-export': 'off',
-  },
 };
