@@ -1,21 +1,44 @@
-const rollup = require('rollup');
-const { terser } = require('rollup-plugin-terser');
-const { getRollupPlugins, getExternal, DIST } = require('./scripts/util');
+const { getRollupPlugins, getRollupExternal, defaultOptions, rollupMinify } = require('@gera2ld/plaid');
 const pkg = require('./package.json');
 
+const DIST = defaultOptions.distDir;
 const FILENAME = 'index';
 const BANNER = `/*! ${pkg.name} v${pkg.version} | ${pkg.license} License */`;
 
-const external = getExternal();
+const external = getRollupExternal();
 const bundleOptions = {
   extend: true,
   esModule: false,
 };
+const postcssOptions = {
+  ...require('@gera2ld/plaid/config/postcssrc'),
+  inject: false,
+  minimize: true,
+};
 const rollupConfig = [
   {
     input: {
-      input: 'src/index.js',
-      plugins: getRollupPlugins({ esm: true }),
+      input: 'src/index.ts',
+      plugins: getRollupPlugins({
+        esm: true,
+        extensions: defaultOptions.extensions,
+        postcss: postcssOptions,
+      }),
+      external,
+    },
+    output: {
+      format: 'esm',
+      file: `${DIST}/${FILENAME}.esm.js`,
+    },
+  },
+  {
+    input: {
+      input: 'src/index.ts',
+      plugins: getRollupPlugins({
+        esm: true,
+        extensions: defaultOptions.extensions,
+        postcss: postcssOptions,
+      }),
     },
     output: {
       format: 'iife',
@@ -29,19 +52,7 @@ const rollupConfig = [
 // Generate minified versions
 rollupConfig.filter(({ minify }) => minify)
 .forEach(config => {
-  rollupConfig.push({
-    input: {
-      ...config.input,
-      plugins: [
-        ...config.input.plugins,
-        terser(),
-      ],
-    },
-    output: {
-      ...config.output,
-      file: config.output.file.replace(/\.js$/, '.min.js'),
-    },
-  });
+  rollupConfig.push(rollupMinify(config));
 });
 
 rollupConfig.forEach((item) => {

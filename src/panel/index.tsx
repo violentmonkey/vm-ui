@@ -1,23 +1,29 @@
+import { JSXChild } from '@gera2ld/jsx-dom';
 import { getShadowElement, appendToBody } from '../util';
-import { css as baseCss } from '../base.css';
-import { css } from './style.css';
+import baseCss from '../base.css';
+import css from './style.css';
 
-export function getPanel(options) {
+const React = VM;
+
+export function getPanel(options?: {
+  css?: string;
+  content?: string;
+}) {
   const { host, root } = getShadowElement();
   const extraStyle = <style />;
   const body = <div className="panel-body" />;
   const wrapper = <div className="panel">{body}</div>;
   root.append(<style>{baseCss}{css}</style>, extraStyle, wrapper);
-  const setCss = (cssText) => {
+  const setCss = (cssText: string) => {
     extraStyle.textContent = cssText || '';
   };
   const clear = () => {
     body.innerHTML = '';
   };
-  const append = (...args) => {
+  const append = (...args: JSXChild[]) => {
     body.append(...args);
   };
-  const setContent = (content) => {
+  const setContent = (content: string) => {
     clear();
     append(content);
   };

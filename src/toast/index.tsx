@@ -1,10 +1,12 @@
+import { JSXChild } from '@gera2ld/jsx-dom';
 import { getShadowElement, appendToBody } from '../util';
-import { css as baseCss } from '../base.css';
-import { css } from './style.css';
+import baseCss from '../base.css';
+import css from './style.css';
 
+const React = VM;
 const TOAST_FADE = 'toast-fade';
 
-export function showToast(content, delay = 2000) {
+export function showToast(content: JSXChild | JSXChild[], delay = 2000): () => void {
   const { host, root } = getShadowElement();
   appendToBody('VM.showToast', host);
   const el = <div className={`toast ${TOAST_FADE}`}>{content}</div>;
