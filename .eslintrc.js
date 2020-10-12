@@ -3,7 +3,11 @@ module.exports = {
   extends: [
     require.resolve('@gera2ld/plaid-common-ts/eslint'),
   ],
-  globals: {
-    VM: true,
+  parserOptions: {
+    project: './tsconfig.json',
+  },
+  rules: {
+    '@typescript-eslint/naming-convention': 'off',
+    'import/extensions': 'off',
   },
 };

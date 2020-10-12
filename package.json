@@ -14,14 +14,15 @@
     "prebuild": "npm run ci && npm run clean",
     "ci": "npm run lint",
     "build": "tsc && npm run build:js",
-    "lint": "eslint --ext .ts .",
+    "lint": "eslint --ext .ts,.tsx .",
     "prepublishOnly": "npm run build",
     "clean": "del dist types",
     "build:js": "rollup -c rollup.conf.js"
   },
   "repository": "git@github.com:violentmonkey/vm-ui.git",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "unpkg": "dist/index.min.js",
   "jsdelivr": "dist/index.min.js",
@@ -35,8 +36,8 @@
   "devDependencies": {
     "@gera2ld/plaid": "~2.0.0",
     "@gera2ld/plaid-common-react": "~2.0.0",
-    "@gera2ld/plaid-common-ts": "^2.0.5",
-    "@gera2ld/plaid-rollup": "~2.0.0",
+    "@gera2ld/plaid-common-ts": "~2.1.2",
+    "@gera2ld/plaid-rollup": "~2.1.1",
     "del-cli": "^3.0.1",
     "husky": "^4.2.5"
   },

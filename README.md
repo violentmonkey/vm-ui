@@ -56,14 +56,14 @@ $ npx -p https://github.com/violentmonkey/generator-userscript.git -p yo yo @vio
 
 ### VM.showToast
 
-`VM.showToast(content, delay = 2000)`
+`VM.showToast(content, { delay = 2000, shadow = true })`
 
 Show a toast message.
 
-The returned value is a function to close the toast immediately.
+Returns a function to close the toast immediately.
 
 ### VM.getPanel
 
-`VM.getPanel({ css, content })`
+`VM.getPanel({ css, content, shadow = true })`
 
 Create a shadow DOM.

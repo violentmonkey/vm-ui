@@ -7,8 +7,10 @@ module.exports = {
     }],
   ],
   plugins: [
-
-    // react
-    '@babel/plugin-transform-react-jsx',
+    // JSX
+    ['@babel/plugin-transform-react-jsx', {
+      pragma: 'VM.createElement',
+      pragmaFrag: 'VM.Fragment',
+    }],
   ].filter(Boolean),
 };

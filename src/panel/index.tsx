@@ -1,22 +1,39 @@
 import { JSXChild } from '@gera2ld/jsx-dom';
-import { getShadowElement, appendToBody } from '../util';
-import baseCss from '../base.css';
-import css from './style.css';
+import { getHostElement, appendToBody } from '../util';
 
-const React = VM;
-
-export function getPanel(options?: {
+interface IPanelOptions {
   css?: string;
   content?: string;
-}) {
-  const { host, root } = getShadowElement();
-  const extraStyle = <style />;
-  const body = <div className="panel-body" />;
-  const wrapper = <div className="panel">{body}</div>;
-  root.append(<style>{baseCss}{css}</style>, extraStyle, wrapper);
-  const setCss = (cssText: string) => {
-    extraStyle.textContent = cssText || '';
+  shadow?: boolean;
+}
+export function getPanel(options?: IPanelOptions) {
+  options = {
+    shadow: true,
+    ...options,
   };
+  const { host, root, addStyle } = getHostElement(options.shadow);
+  const body = <div
+    style={{
+      position: 'relative',
+      padding: '8px',
+      borderRadius: '4px',
+      border: '1px solid #eaeaea',
+      backgroundColor: '#fff',
+      wordBreak: 'break-all',
+    }}
+  />;
+  const wrapper = <div
+    style={{
+      position: 'fixed',
+      maxWidth: '300px',
+      zIndex: '10000',
+      color: '#333',
+    }}
+  >
+    {body}
+  </div>;
+  if (options.css) addStyle(options.css);
+  root.append(wrapper);
   const clear = () => {
     body.innerHTML = '';
   };
@@ -27,10 +44,7 @@ export function getPanel(options?: {
     clear();
     append(content);
   };
-  if (options) {
-    if (options.css) setCss(options.css);
-    if (options.content) setContent(options.content);
-  }
+  if (options.content) setContent(options.content);
   return {
     host,
     root,
@@ -38,7 +52,6 @@ export function getPanel(options?: {
     body,
     clear,
     append,
-    setCss,
     setContent,
     show: () => {
       appendToBody('VM.getPanel.show', host);
