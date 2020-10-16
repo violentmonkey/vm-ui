@@ -6,6 +6,9 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json',
   },
+  globals: {
+    VM: true,
+  },
   rules: {
     '@typescript-eslint/naming-convention': 'off',
     'import/extensions': 'off',

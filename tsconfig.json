@@ -7,12 +7,10 @@
     "emitDeclarationOnly": true,
     "outDir": "types",
     "allowSyntheticDefaultImports": true,
-    "jsx": "react",
-    "jsxFactory": "VM.createElement",
-    "jsxFragmentFactory": "VM.Fragment"
+    "jsx": "react"
   },
-  "files": [
-    "src/index.ts",
-    "src/index.d.ts"
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ]
 }

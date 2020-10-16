@@ -1,4 +1,5 @@
 import { JSXElement } from '@gera2ld/jsx-dom';
+import baseCss from './base.css';
 
 if (typeof VM === 'undefined' || !VM || !VM.createElement) {
   console.error(`\
@@ -9,6 +10,8 @@ Please include following code in your metadata:
 `);
 }
 
+const React = VM;
+
 interface IHostElementResult {
   id: string;
   shadow: boolean;
@@ -17,22 +20,17 @@ interface IHostElementResult {
   addStyle: (css: string) => void;
   dispose: () => void;
 }
+
 export function getHostElement(shadow = true): IHostElementResult {
   const id = getUniqueId('vmui-');
-  const host: HTMLElement = <div
-    id={id}
-    style={{
-      all: 'initial',
-      fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif',
-      fontSize: '16px',
-      lineHeight: '1.5',
-    }}
-  />;
+  const host: HTMLElement = VM.createElement(id, {
+    id,
+  });
   let root: ShadowRoot | HTMLElement;
   if (shadow) {
     root = host.attachShadow({ mode: 'open' });
   } else {
-    root = <div />;
+    root = VM.createElement(id);
     host.append(root);
   }
   const styles: HTMLStyleElement[] = [];
@@ -47,6 +45,7 @@ export function getHostElement(shadow = true): IHostElementResult {
     host.remove();
     styles.forEach(style => style.remove());
   };
+  addStyle(baseCss);
   return {
     id, shadow, host, root, addStyle, dispose,
   };

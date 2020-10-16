@@ -8,9 +8,6 @@ module.exports = {
   ],
   plugins: [
     // JSX
-    ['@babel/plugin-transform-react-jsx', {
-      pragma: 'VM.createElement',
-      pragmaFrag: 'VM.Fragment',
-    }],
+    '@babel/plugin-transform-react-jsx',
   ].filter(Boolean),
 };

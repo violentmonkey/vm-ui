@@ -1,5 +1,6 @@
 import { JSXChild } from '@gera2ld/jsx-dom';
 import { getHostElement, appendToBody } from '../util';
+import styles, { stylesheet } from './style.module.css';
 
 interface IPanelOptions {
   css?: string;
@@ -11,28 +12,17 @@ export function getPanel(options?: IPanelOptions) {
     shadow: true,
     ...options,
   };
-  const { host, root, addStyle } = getHostElement(options.shadow);
-  const body = <div
-    style={{
-      position: 'relative',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #eaeaea',
-      backgroundColor: '#fff',
-      wordBreak: 'break-all',
-    }}
-  />;
-  const wrapper = <div
-    style={{
-      position: 'fixed',
-      maxWidth: '300px',
-      zIndex: '10000',
-      color: '#333',
-    }}
-  >
-    {body}
-  </div>;
-  if (options.css) addStyle(options.css);
+  const {
+    id, host, root, addStyle,
+  } = getHostElement(options.shadow);
+  const body = VM.createElement(id);
+  const wrapper = VM.createElement(id, {
+    className: styles.panel,
+  }, body);
+  addStyle([
+    stylesheet,
+    options.css,
+  ].filter(Boolean).join('\n'));
   root.append(wrapper);
   const clear = () => {
     body.innerHTML = '';
@@ -46,6 +36,7 @@ export function getPanel(options?: IPanelOptions) {
   };
   if (options.content) setContent(options.content);
   return {
+    id,
     host,
     root,
     wrapper,
