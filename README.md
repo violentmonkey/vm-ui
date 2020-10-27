@@ -60,8 +60,6 @@ $ npx -p https://github.com/violentmonkey/generator-userscript.git -p yo yo @vio
 
 Show a toast message.
 
-Returns a function to close the toast immediately.
-
 ### VM.getPanel
 
 `VM.getPanel({ css, content, shadow = true })`
