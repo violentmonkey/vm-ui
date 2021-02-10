@@ -17,10 +17,15 @@ interface IToastOptions {
   shadow?: boolean;
 
   /**
+   * Additional className for the toast root element
+   */
+  className?: string;
+
+  /**
    * Additional CSS for the toast.
    * `:host` can be used to match the host element.
    */
-  style?: string;
+  style?: string | ((id: string) => string);
 }
 
 export function showToast(content: JSXChild | JSXChild[], options?: IToastOptions) {
@@ -34,12 +39,17 @@ export function showToast(content: JSXChild | JSXChild[], options?: IToastOption
   } = getHostElement(options.shadow);
   appendToBody('VM.showToast', host);
   const body = VM.createElement(id, {
-    className: styles.toast,
+    className: [
+      styles.toast,
+      options.className,
+    ].filter(Boolean).join(' '),
   }, content);
   root.append(body);
+  let { style } = options;
+  if (typeof style === 'function') style = style(id);
   addStyle([
     stylesheet,
-    options.style,
+    style,
   ].filter(Boolean).join('\n'));
   let closed = false;
   const close = () => {
