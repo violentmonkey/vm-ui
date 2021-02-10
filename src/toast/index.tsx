@@ -5,9 +5,24 @@ import styles, { stylesheet } from './style.module.css';
 const TOAST_FADE = `${styles.toast}-fade`;
 
 interface IToastOptions {
+  /**
+   * The duration for the toast to show.
+   */
   duration?: number;
+
+  /**
+   * Whether to create the toast with ShadowDOM.
+   * Note that CSS may not work with ShadowDOM in pages with strict CSP limits.
+   */
   shadow?: boolean;
+
+  /**
+   * Additional CSS for the toast.
+   * `:host` can be used to match the host element.
+   */
+  style?: string;
 }
+
 export function showToast(content: JSXChild | JSXChild[], options?: IToastOptions) {
   options = {
     duration: 2000,
@@ -22,7 +37,10 @@ export function showToast(content: JSXChild | JSXChild[], options?: IToastOption
     className: styles.toast,
   }, content);
   root.append(body);
-  addStyle(stylesheet);
+  addStyle([
+    stylesheet,
+    options.style,
+  ].filter(Boolean).join('\n'));
   let closed = false;
   const close = () => {
     if (closed) return;
