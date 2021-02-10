@@ -19,7 +19,7 @@ First, include dependencies:
 // ...
 ```
 
-Then use it like so:
+Then use it like so, all exports can be accessed under namespace `VM`:
 
 ```
 VM.showToast('hello');
