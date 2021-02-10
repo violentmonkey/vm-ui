@@ -5,12 +5,12 @@ import styles, { stylesheet } from './style.module.css';
 const TOAST_FADE = `${styles.toast}-fade`;
 
 interface IToastOptions {
-  delay?: number;
+  duration?: number;
   shadow?: boolean;
 }
 export function showToast(content: JSXChild | JSXChild[], options?: IToastOptions) {
   options = {
-    delay: 2000,
+    duration: 2000,
     shadow: true,
     ...options,
   };
@@ -34,7 +34,7 @@ export function showToast(content: JSXChild | JSXChild[], options?: IToastOption
   };
   requestAnimationFrame(() => {
     body.classList.remove(TOAST_FADE);
-    setTimeout(close, options.delay);
+    setTimeout(close, options.duration);
   });
   return {
     id,
