@@ -2,11 +2,12 @@ import { JSXChild } from '@gera2ld/jsx-dom';
 import { getHostElement, appendToBody } from '../util';
 import styles, { stylesheet } from './style.module.css';
 
-interface IPanelOptions {
+export interface IPanelOptions {
   css?: string;
   content?: string;
   shadow?: boolean;
 }
+
 export function getPanel(options?: IPanelOptions) {
   options = {
     shadow: true,

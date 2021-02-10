@@ -4,7 +4,7 @@ import styles, { stylesheet } from './style.module.css';
 
 const TOAST_FADE = `${styles.toast}-fade`;
 
-interface IToastOptions {
+export interface IToastOptions {
   /**
    * The duration for the toast to show.
    */

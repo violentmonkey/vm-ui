@@ -3,7 +3,7 @@
 [![NPM](https://img.shields.io/npm/v/@violentmonkey/ui.svg)](https://npm.im/@violentmonkey/ui)
 ![License](https://img.shields.io/npm/l/@violentmonkey/ui.svg)
 
-Common UI for userscripts in Violentmonkey.
+Common UI for userscripts, working in Violentmonkey as well as other userscript managers.
 
 ## Dependencies
 
@@ -21,7 +21,7 @@ First, include dependencies:
 
 Then use it like so, all exports can be accessed under namespace `VM`:
 
-```
+```js
 VM.showToast('hello');
 ```
 
@@ -54,14 +54,4 @@ $ npx -p https://github.com/violentmonkey/generator-userscript.git -p yo yo @vio
 
 ## API
 
-### VM.showToast
-
-`VM.showToast(content, { delay = 2000, shadow = true })`
-
-Show a toast message.
-
-### VM.getPanel
-
-`VM.getPanel({ css, content, shadow = true })`
-
-Create a shadow DOM.
+See [the documentation](https://violentmonkey.github.io/vm-ui/modules.html).

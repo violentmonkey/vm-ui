@@ -12,7 +12,7 @@ Please include following code in your metadata:
 
 const React = VM;
 
-interface IHostElementResult {
+export interface IHostElementResult {
   id: string;
   shadow: boolean;
   host: HTMLElement;
