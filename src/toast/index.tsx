@@ -34,7 +34,9 @@ export function showToast(content: JSXChild | JSXChild[], options?: IToastOption
   };
   requestAnimationFrame(() => {
     body.classList.remove(TOAST_FADE);
-    setTimeout(close, options.duration);
+    if (options.duration) {
+      setTimeout(close, options.duration);
+    }
   });
   return {
     id,
