@@ -14,10 +14,13 @@ const React = VM;
 
 export interface IHostElementResult {
   id: string;
+  tag: string;
   shadow: boolean;
   host: HTMLElement;
   root: ShadowRoot | HTMLElement;
   addStyle: (css: string) => void;
+  show: () => void;
+  hide: () => void;
   dispose: () => void;
 }
 
@@ -46,9 +49,22 @@ export function getHostElement(shadow = true): IHostElementResult {
     styles.forEach(style => style.remove());
   };
   addStyle(baseCss);
-  return {
-    id, shadow, host, root, addStyle, dispose,
+  const result: IHostElementResult = {
+    id,
+    tag: 'VM.getHostElement',
+    shadow,
+    host,
+    root,
+    addStyle,
+    dispose,
+    show() {
+      appendToBody(this.tag, this.host);
+    },
+    hide() {
+      this.host.remove();
+    },
   };
+  return result;
 }
 
 export function appendToBody(tag: string, ...children: JSXElement[]): void {

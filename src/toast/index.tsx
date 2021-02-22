@@ -1,5 +1,5 @@
 import { JSXChild } from '@gera2ld/jsx-dom';
-import { getHostElement, appendToBody } from '../util';
+import { getHostElement, IHostElementResult } from '../util';
 import styles, { stylesheet } from './style.module.css';
 
 const TOAST_FADE = `${styles.toast}-fade`;
@@ -28,16 +28,21 @@ export interface IToastOptions {
   style?: string | ((id: string) => string);
 }
 
-export function showToast(content: JSXChild | JSXChild[], options?: IToastOptions) {
+export interface IToastResult extends IHostElementResult {
+  body: HTMLElement;
+  close: () => void;
+}
+
+export function showToast(content: JSXChild | JSXChild[], options?: IToastOptions): IToastResult {
   options = {
     duration: 2000,
     shadow: true,
     ...options,
   };
+  const hostElem = getHostElement(options.shadow);
   const {
-    id, host, root, dispose, addStyle,
-  } = getHostElement(options.shadow);
-  appendToBody('VM.showToast', host);
+    id, root, dispose, addStyle,
+  } = hostElem;
   const body = VM.createElement(id, {
     className: [
       styles.toast,
@@ -66,11 +71,12 @@ export function showToast(content: JSXChild | JSXChild[], options?: IToastOption
       setTimeout(close, options.duration);
     }
   });
-  return {
-    id,
-    host,
-    root,
+  const result = {
+    ...hostElem,
+    tag: 'VM.showToast',
     body,
     close,
   };
+  result.show();
+  return result;
 }

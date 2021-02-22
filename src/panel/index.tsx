@@ -1,5 +1,5 @@
 import { JSXChild } from '@gera2ld/jsx-dom';
-import { getHostElement, appendToBody } from '../util';
+import { getHostElement, IHostElementResult } from '../util';
 import styles, { stylesheet } from './style.module.css';
 
 export interface IPanelOptions {
@@ -8,14 +8,21 @@ export interface IPanelOptions {
   shadow?: boolean;
 }
 
-export function getPanel(options?: IPanelOptions) {
+export interface IPanelResult extends IHostElementResult {
+  wrapper: HTMLElement;
+  body: HTMLElement;
+  clear: () => void;
+  append: (...args: JSXChild[]) => void;
+  setContent: (content: string) => void;
+}
+
+export function getPanel(options?: IPanelOptions): IPanelResult {
   options = {
     shadow: true,
     ...options,
   };
-  const {
-    id, host, root, addStyle,
-  } = getHostElement(options.shadow);
+  const hostElem = getHostElement(options.shadow);
+  const { id, root, addStyle } = hostElem;
   const body = VM.createElement(id);
   const wrapper = VM.createElement(id, {
     className: styles.panel,
@@ -37,19 +44,12 @@ export function getPanel(options?: IPanelOptions) {
   };
   if (options.content) setContent(options.content);
   return {
-    id,
-    host,
-    root,
+    ...hostElem,
+    tag: 'VM.getPanel',
     wrapper,
     body,
     clear,
     append,
     setContent,
-    show: () => {
-      appendToBody('VM.getPanel.show', host);
-    },
-    hide: () => {
-      host.remove();
-    },
   };
 }
