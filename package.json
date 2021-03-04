@@ -11,13 +11,14 @@
   },
   "scripts": {
     "dev": "rollup -wc rollup.conf.js",
-    "prebuild": "npm run ci && npm run clean",
     "ci": "npm run lint",
-    "build": "tsc && npm run build:js",
+    "build": "run-s ci clean build:types build:js",
     "lint": "eslint --ext .ts,.tsx .",
     "prepublishOnly": "npm run build",
     "clean": "del-cli dist types",
-    "build:js": "rollup -c rollup.conf.js"
+    "build:js": "rollup -c rollup.conf.js",
+    "build:types": "tsc",
+    "build:docs": "typedoc src/index.ts"
   },
   "repository": "git@github.com:violentmonkey/vm-ui.git",
   "publishConfig": {
