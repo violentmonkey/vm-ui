@@ -1,5 +1,6 @@
 import { JSXElement } from '@gera2ld/jsx-dom';
 import baseCss from './base.css';
+import themes, { stylesheet as themeCss } from './theme.module.css';
 
 if (typeof VM === 'undefined' || !VM || !VM.createElement) {
   console.error(`\
@@ -11,6 +12,8 @@ Please include following code in your metadata:
 }
 
 const React = VM;
+
+export { themes, themeCss };
 
 export interface IHostElementResult {
   id: string;

@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "rollup -wc rollup.conf.js",
     "ci": "npm run lint",
-    "build": "run-s ci clean build:types build:js",
+    "build": "cross-env NODE_ENV=production run-s ci clean build:types build:js",
     "lint": "eslint --ext .ts,.tsx .",
     "prepublishOnly": "npm run build",
     "clean": "del-cli dist types",

@@ -1,8 +1,8 @@
 import { JSXChild } from '@gera2ld/jsx-dom';
-import { getHostElement, IHostElementResult } from '../util';
+import {
+  getHostElement, IHostElementResult, themes, themeCss,
+} from '../util';
 import styles, { stylesheet } from './style.module.css';
-
-const TOAST_FADE = `${styles.toast}-fade`;
 
 export interface IToastOptions {
   /**
@@ -17,6 +17,12 @@ export interface IToastOptions {
   shadow?: boolean;
 
   /**
+   * Apply built-in themes, default as `light`.
+   * Available values are `light` and `dark`, any other value will disable the theme CSS.
+   */
+  theme?: string;
+
+  /**
    * Additional className for the toast root element
    */
   className?: string;
@@ -26,6 +32,16 @@ export interface IToastOptions {
    * `:host` can be used to match the host element.
    */
   style?: string | ((id: string) => string);
+
+  /**
+   * Hook before showing the toast, e.g. adding a fade-in transition.
+   */
+  beforeEnter: (result: IToastResult) => Promise<void>;
+
+  /**
+   * Hook before closing the toast, e.g. adding a fade-out transition.
+   */
+  beforeClose: (result: IToastResult) => Promise<void>;
 }
 
 export interface IToastResult extends IHostElementResult {
@@ -37,6 +53,9 @@ export function showToast(content: JSXChild | JSXChild[], options?: IToastOption
   options = {
     duration: 2000,
     shadow: true,
+    theme: 'light',
+    beforeEnter: defaultBeforeEnter,
+    beforeClose: defaultBeforeClose,
     ...options,
   };
   const hostElem = getHostElement(options.shadow);
@@ -46,6 +65,7 @@ export function showToast(content: JSXChild | JSXChild[], options?: IToastOption
   const body = VM.createElement(id, {
     className: [
       styles.toast,
+      themes[options.theme],
       options.className,
     ].filter(Boolean).join(' '),
   }, content);
@@ -54,23 +74,10 @@ export function showToast(content: JSXChild | JSXChild[], options?: IToastOption
   if (typeof style === 'function') style = style(id);
   addStyle([
     stylesheet,
+    themeCss,
     style,
   ].filter(Boolean).join('\n'));
   let closed = false;
-  const close = () => {
-    if (closed) return;
-    closed = true;
-    body.classList.add(TOAST_FADE);
-    setTimeout(() => {
-      dispose();
-    }, 200);
-  };
-  requestAnimationFrame(() => {
-    body.classList.remove(TOAST_FADE);
-    if (options.duration) {
-      setTimeout(close, options.duration);
-    }
-  });
   const result = {
     ...hostElem,
     tag: 'VM.showToast',
@@ -78,5 +85,38 @@ export function showToast(content: JSXChild | JSXChild[], options?: IToastOption
     close,
   };
   result.show();
+  (async () => {
+    await options.beforeEnter?.(result);
+    if (options.duration) {
+      setTimeout(close, options.duration);
+    }
+  })();
   return result;
+
+  async function close() {
+    if (closed) return;
+    closed = true;
+    await options.beforeClose?.(result);
+    dispose();
+  }
+}
+
+async function defaultBeforeEnter(result: IToastResult) {
+  const { body } = result;
+  body.style.transition = 'opacity .2s';
+  body.style.opacity = '0';
+  await sleep(0);
+  body.style.opacity = '1';
+  await sleep(200);
+}
+
+async function defaultBeforeClose(result: IToastResult) {
+  const { body } = result;
+  body.style.transition = 'opacity .2s';
+  body.style.opacity = '0';
+  await sleep(200);
+}
+
+async function sleep(time: number) {
+  return new Promise(resolve => setTimeout(resolve, time));
 }

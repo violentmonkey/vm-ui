@@ -1,4 +1,4 @@
-const { getRollupPlugins, getRollupExternal, defaultOptions, rollupMinify } = require('@gera2ld/plaid');
+const { getRollupPlugins, getRollupExternal, defaultOptions } = require('@gera2ld/plaid');
 const pkg = require('./package.json');
 
 const DIST = defaultOptions.distDir;
@@ -14,6 +14,9 @@ const postcssOptions = {
   ...require('@gera2ld/plaid/config/postcssrc'),
   inject: false,
   minimize: true,
+  modules: {
+    generateScopedName: 'vmui-[hash:base64:6]',
+  },
 };
 const rollupConfig = [
   {
@@ -31,10 +34,11 @@ const rollupConfig = [
       file: `${DIST}/${FILENAME}.esm.js`,
     },
   },
-  {
+  ...[false, true].map(minimize => ({
     input: {
       input: 'src/index.ts',
       plugins: getRollupPlugins({
+        minimize,
         esm: true,
         extensions: defaultOptions.extensions,
         postcss: postcssOptions,
@@ -42,18 +46,12 @@ const rollupConfig = [
     },
     output: {
       format: 'iife',
-      file: `${DIST}/${FILENAME}.js`,
+      file: `${DIST}/${FILENAME}${minimize ? '.min' : ''}.js`,
       name: 'VM',
       ...bundleOptions,
     },
-    minify: true,
-  },
+  })),
 ];
-// Generate minified versions
-rollupConfig.filter(({ minify }) => minify)
-.forEach(config => {
-  rollupConfig.push(rollupMinify(config));
-});
 
 rollupConfig.forEach((item) => {
   item.output = {

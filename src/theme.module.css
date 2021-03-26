@@ -1,0 +1,11 @@
+.dark {
+  background: rgba(0,0,0,.8);
+  color: white;
+  border: 1px solid #333;
+}
+
+.light {
+  background: white;
+  color: #333;
+  border: 1px solid #ddd;
+}
