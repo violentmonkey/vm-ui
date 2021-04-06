@@ -25,8 +25,8 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "unpkg": "dist/index.min.js",
-  "jsdelivr": "dist/index.min.js",
+  "unpkg": "dist/index.js",
+  "jsdelivr": "dist/index.js",
   "typings": "types/index.d.ts",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

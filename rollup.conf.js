@@ -34,11 +34,10 @@ const rollupConfig = [
       file: `${DIST}/${FILENAME}.esm.js`,
     },
   },
-  ...[false, true].map(minimize => ({
+  {
     input: {
       input: 'src/index.ts',
       plugins: getRollupPlugins({
-        minimize,
         esm: true,
         extensions: defaultOptions.extensions,
         postcss: postcssOptions,
@@ -46,11 +45,11 @@ const rollupConfig = [
     },
     output: {
       format: 'iife',
-      file: `${DIST}/${FILENAME}${minimize ? '.min' : ''}.js`,
+      file: `${DIST}/${FILENAME}.js`,
       name: 'VM',
       ...bundleOptions,
     },
-  })),
+  },
 ];
 
 rollupConfig.forEach((item) => {
