@@ -1,0 +1,176 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@violentmonkey/ui</title>
+	<meta name="description" content="Documentation for @violentmonkey/ui">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@violentmonkey/ui</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>@violentmonkey/ui</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#violentmonkeyui" id="violentmonkeyui" style="color: inherit; text-decoration: none;">
+					<h1>@violentmonkey/ui</h1>
+				</a>
+				<p><a href="https://npm.im/@violentmonkey/ui"><img src="https://img.shields.io/npm/v/@violentmonkey/ui.svg" alt="NPM"></a>
+				<img src="https://img.shields.io/npm/l/@violentmonkey/ui.svg" alt="License"></p>
+				<p>Common UI for userscripts, working in Violentmonkey as well as other userscript managers.</p>
+				<a href="#dependencies" id="dependencies" style="color: inherit; text-decoration: none;">
+					<h2>Dependencies</h2>
+				</a>
+				<ul>
+					<li><a href="https://github.com/violentmonkey/vm-dom">@violentmonkey/dom</a></li>
+				</ul>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<p>First, include dependencies:</p>
+				<pre><code class="language-js"><span style="color: #008000">// ...</span>
+<span style="color: #008000">// @require https://cdn.jsdelivr.net/combine/npm/@violentmonkey/dom@1,npm/@violentmonkey/ui@0.6</span>
+<span style="color: #008000">// ...</span>
+</code></pre>
+				<p>Then use it like so, all exports can be accessed under namespace <code>VM</code>:</p>
+				<pre><code class="language-js"><span style="color: #0070C1">VM</span><span style="color: #000000">.</span><span style="color: #795E26">showToast</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;hello&#039;</span><span style="color: #000000">);</span>
+</code></pre>
+				<p>Or use with JSX and bundlers, for example:</p>
+				<pre><code class="language-js"><span style="color: #008000">// .babelrc.js</span>
+<span style="color: #000000">{</span>
+<span style="color: #000000">  plugins: [</span>
+<span style="color: #000000">    </span><span style="color: #008000">// JSX</span>
+<span style="color: #000000">    [</span><span style="color: #A31515">&#039;@babel/plugin-transform-react-jsx&#039;</span><span style="color: #000000">, {</span>
+<span style="color: #000000">      </span><span style="color: #001080">pragma:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;VM.createElement&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">pragmaFrag:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;VM.Fragment&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    }],</span>
+<span style="color: #000000">  ],</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<pre><code class="language-js"><span style="color: #0070C1">VM</span><span style="color: #000000">.</span><span style="color: #795E26">showToast</span><span style="color: #000000">(</span><span style="color: #800000">&lt;div&gt;</span><span style="color: #000000">hello, world</span><span style="color: #800000">&lt;/div&gt;</span><span style="color: #000000">);</span>
+</code></pre>
+				<p>To initialize a project for userscript with JSX support, try <a href="https://github.com/violentmonkey/generator-userscript">generator-userscript</a>:</p>
+				<pre><code class="language-sh"><span style="color: #000000">$ mkdir my-script</span>
+<span style="color: #000000">$ </span><span style="color: #795E26">cd</span><span style="color: #000000"> my-script</span>
+<span style="color: #000000">$ npx -p https://github.com/violentmonkey/generator-userscript.git -p yo yo @violentmonkey/userscript</span>
+</code></pre>
+				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+					<h2>API</h2>
+				</a>
+				<p>See <a href="https://violentmonkey.github.io/vm-ui/modules.html">the documentation</a>.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ihostelementresult.html" class="tsd-kind-icon">IHost<wbr>Element<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ipaneloptions.html" class="tsd-kind-icon">IPanel<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ipanelresult.html" class="tsd-kind-icon">IPanel<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/itoastoptions.html" class="tsd-kind-icon">IToast<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/itoastresult.html" class="tsd-kind-icon">IToast<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#themecss" class="tsd-kind-icon">theme<wbr>Css</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#themes" class="tsd-kind-icon">themes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#appendtobody" class="tsd-kind-icon">append<wbr>ToBody</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#gethostelement" class="tsd-kind-icon">get<wbr>Host<wbr>Element</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getpanel" class="tsd-kind-icon">get<wbr>Panel</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getuniqueid" class="tsd-kind-icon">get<wbr>Unique<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#showtoast" class="tsd-kind-icon">show<wbr>Toast</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
