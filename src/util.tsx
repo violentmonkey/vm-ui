@@ -1,15 +1,6 @@
 import baseCss from './base.css';
 import themes, { stylesheet as themeCss } from './theme.module.css';
 
-if (typeof VM === 'undefined' || !VM || !VM.h) {
-  console.error(`\
-[VM-UI] VM.h is not defined!
-Please include following code in your metadata:
-
-// @require https://cdn.jsdelivr.net/combine/npm/@violentmonkey/dom@2,npm/@violentmonkey/ui
-`);
-}
-
 export { themes, themeCss };
 
 export interface IHostElementResult {
