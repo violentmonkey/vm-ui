@@ -15,7 +15,7 @@ First, include dependencies:
 
 ```js
 // ...
-// @require https://cdn.jsdelivr.net/combine/npm/@violentmonkey/dom@1,npm/@violentmonkey/ui@0.6
+// @require https://cdn.jsdelivr.net/combine/npm/@violentmonkey/dom@2,npm/@violentmonkey/ui@0.7
 // ...
 ```
 
@@ -23,6 +23,7 @@ Then use it like so, all exports can be accessed under namespace `VM`:
 
 ```js
 VM.showToast('hello');
+VM.showToast(VM.h('div', {}, 'hello, world'));
 ```
 
 Or use with JSX and bundlers, for example:
@@ -33,7 +34,7 @@ Or use with JSX and bundlers, for example:
   plugins: [
     // JSX
     ['@babel/plugin-transform-react-jsx', {
-      pragma: 'VM.createElement',
+      pragma: 'VM.h',
       pragmaFrag: 'VM.Fragment',
     }],
   ],
