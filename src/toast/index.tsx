@@ -1,7 +1,5 @@
-import { JSXChild } from '@gera2ld/jsx-dom';
-import {
-  getHostElement, IHostElementResult, themes, themeCss,
-} from '../util';
+import { VChildren } from '@gera2ld/jsx-dom';
+import { getHostElement, IHostElementResult, themes, themeCss } from '../util';
 import styles, { stylesheet } from './style.module.css';
 
 export interface IToastOptions {
@@ -49,7 +47,10 @@ export interface IToastResult extends IHostElementResult {
   close: () => void;
 }
 
-export function showToast(content: JSXChild | JSXChild[], options?: IToastOptions): IToastResult {
+export function showToast(
+  content: VChildren,
+  options?: IToastOptions
+): IToastResult {
   options = {
     duration: 2000,
     shadow: true,
@@ -59,24 +60,20 @@ export function showToast(content: JSXChild | JSXChild[], options?: IToastOption
     ...options,
   };
   const hostElem = getHostElement(options.shadow);
-  const {
-    id, root, dispose, addStyle,
-  } = hostElem;
-  const body = VM.createElement(id, {
-    className: [
-      styles.toast,
-      themes[options.theme],
-      options.className,
-    ].filter(Boolean).join(' '),
-  }, content);
-  root.append(body);
+  const { dispose, addStyle } = hostElem;
+  const body = VM.m(
+    <hostElem.id
+      className={[styles.toast, themes[options.theme], options.className]
+        .filter(Boolean)
+        .join(' ')}
+    >
+      {content}
+    </hostElem.id>
+  );
+  hostElem.root.append(body);
   let { style } = options;
-  if (typeof style === 'function') style = style(id);
-  addStyle([
-    stylesheet,
-    themeCss,
-    style,
-  ].filter(Boolean).join('\n'));
+  if (typeof style === 'function') style = style(hostElem.id);
+  addStyle([stylesheet, themeCss, style].filter(Boolean).join('\n'));
   let closed = false;
   const result = {
     ...hostElem,
@@ -118,5 +115,5 @@ async function defaultBeforeClose(result: IToastResult) {
 }
 
 async function sleep(time: number) {
-  return new Promise(resolve => setTimeout(resolve, time));
+  return new Promise((resolve) => setTimeout(resolve, time));
 }

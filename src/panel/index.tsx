@@ -1,7 +1,4 @@
-import { JSXChild } from '@gera2ld/jsx-dom';
-import {
-  getHostElement, IHostElementResult, themes, themeCss,
-} from '../util';
+import { getHostElement, IHostElementResult, themes, themeCss } from '../util';
 import styles, { stylesheet } from './style.module.css';
 
 export interface IPanelOptions {
@@ -14,7 +11,7 @@ export interface IPanelOptions {
   /**
    * Initial DOM content of panel body.
    */
-  content?: JSXChild;
+  content?: Node;
 
   /**
    * Additional CSS for the toast.
@@ -50,11 +47,11 @@ export interface IPanelResult extends IHostElementResult {
   /**
    * Append elements to the panel body, shorthand for `panel.body.append(...)`.
    */
-  append: (...args: JSXChild[]) => void;
+  append: (...args: (string | Node)[]) => void;
   /**
    * Replace the content of panel body by clearing it first and then {@link append}.
    */
-  setContent: (...args: JSXChild[]) => void;
+  setContent: (...args: (string | Node)[]) => void;
 }
 
 export function getPanel(options?: IPanelOptions): IPanelResult {
@@ -64,31 +61,30 @@ export function getPanel(options?: IPanelOptions): IPanelResult {
     ...options,
   };
   const hostElem = getHostElement(options.shadow);
-  const { id, root, addStyle } = hostElem;
-  const body = VM.createElement(id, {
-    className: [
-      styles['panel-body'],
-      themes[options.theme],
-    ].filter(Boolean).join(' '),
-  });
-  const wrapper = VM.createElement(id, {
-    className: styles.panel,
-  }, body);
+  let body: HTMLElement;
+  const wrapper = VM.m(
+    <hostElem.id className={styles.panel}>
+      <hostElem.id
+        className={[styles['panel-body'], themes[options.theme]]
+          .filter(Boolean)
+          .join(' ')}
+        ref={(el: HTMLElement) => {
+          body = el;
+        }}
+      />
+    </hostElem.id>
+  );
   let { style } = options;
-  if (typeof style === 'function') style = style(id);
-  addStyle([
-    stylesheet,
-    themeCss,
-    style,
-  ].filter(Boolean).join('\n'));
-  root.append(wrapper);
+  if (typeof style === 'function') style = style(hostElem.id);
+  hostElem.addStyle([stylesheet, themeCss, style].filter(Boolean).join('\n'));
+  hostElem.root.append(wrapper);
   const clear = () => {
     body.innerHTML = '';
   };
-  const append = (...args: JSXChild[]) => {
+  const append = (...args: (string | Node)[]) => {
     body.append(...args);
   };
-  const setContent = (...args: JSXChild[]) => {
+  const setContent = (...args: (string | Node)[]) => {
     clear();
     append(...args);
   };
