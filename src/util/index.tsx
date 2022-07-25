@@ -2,6 +2,7 @@ import baseCss from './base.css';
 import themes, { stylesheet as themeCss } from './theme.module.css';
 
 export { themes, themeCss };
+export * from './movable';
 
 export interface IHostElementResult {
   id: string;

@@ -4,6 +4,8 @@ import {
   IHostElementResult,
   themes,
   themeCss,
+  Movable,
+  MovableOptions,
 } from '../util';
 import styles, { stylesheet } from './style.module.css';
 
@@ -58,6 +60,10 @@ export interface IPanelResult extends IHostElementResult {
    * Replace the content of panel body by clearing it first and then {@link append}.
    */
   setContent: (...args: (string | Node)[]) => void;
+  /**
+   * Whether this panel can be moved by mouse dragging.
+   */
+  setMovable: (toggle: boolean) => void;
 }
 
 export function getPanel(options?: IPanelOptions): IPanelResult {
@@ -92,6 +98,18 @@ export function getPanel(options?: IPanelOptions): IPanelResult {
     append(...args);
   };
   if (options.content) setContent(options.content);
+
+  let movable: Movable;
+  const setMovable = (toggle: boolean, options?: MovableOptions) => {
+    movable ||= new Movable(wrapper);
+    if (origin) movable.setOptions(options);
+    if (toggle) {
+      movable.enable();
+    } else {
+      movable.disable();
+    }
+  };
+
   return {
     ...hostElem,
     tag: 'VM.getPanel',
@@ -100,5 +118,6 @@ export function getPanel(options?: IPanelOptions): IPanelResult {
     clear,
     append,
     setContent,
+    setMovable,
   };
 }
