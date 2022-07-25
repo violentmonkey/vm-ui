@@ -1,4 +1,4 @@
-import { VChildren } from '@gera2ld/jsx-dom';
+import { VChild } from '@gera2ld/jsx-dom';
 import {
   classNames,
   getHostElement,
@@ -54,7 +54,7 @@ export interface IToastResult extends IHostElementResult {
 }
 
 export function showToast(
-  content: VChildren,
+  content: VChild,
   options?: IToastOptions
 ): IToastResult {
   options = {

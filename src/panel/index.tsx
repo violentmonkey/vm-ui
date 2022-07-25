@@ -1,3 +1,4 @@
+import { VChild } from '@gera2ld/jsx-dom';
 import {
   classNames,
   getHostElement,
@@ -19,7 +20,7 @@ export interface IPanelOptions {
   /**
    * Initial DOM content of panel body.
    */
-  content?: Node;
+  content?: VChild;
 
   /**
    * Additional CSS for the toast.
@@ -55,11 +56,11 @@ export interface IPanelResult extends IHostElementResult {
   /**
    * Append elements to the panel body, shorthand for `panel.body.append(...)`.
    */
-  append: (...args: (string | Node)[]) => void;
+  append: (...args: VChild[]) => void;
   /**
    * Replace the content of panel body by clearing it first and then {@link append}.
    */
-  setContent: (...args: (string | Node)[]) => void;
+  setContent: (...args: VChild[]) => void;
   /**
    * Whether this panel can be moved by mouse dragging.
    */
@@ -90,10 +91,10 @@ export function getPanel(options?: IPanelOptions): IPanelResult {
   const clear = () => {
     body.innerHTML = '';
   };
-  const append = (...args: (string | Node)[]) => {
-    body.append(...args);
+  const append = (...args: VChild[]) => {
+    body.append(...args.map(VM.m).filter(Boolean));
   };
-  const setContent = (...args: (string | Node)[]) => {
+  const setContent = (...args: VChild[]) => {
     clear();
     append(...args);
   };
