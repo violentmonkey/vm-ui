@@ -33,8 +33,9 @@ export class Movable {
   onMouseDown = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const { offsetX: x, offsetY: y } = e;
-    this.dragging = { x, y };
+    const { x, y } = this.el.getBoundingClientRect();
+    const { clientX, clientY } = e;
+    this.dragging = { x: clientX - x, y: clientY - y };
     document.addEventListener('mousemove', this.onMouseMove);
     document.addEventListener('mouseup', this.onMouseUp);
   };
