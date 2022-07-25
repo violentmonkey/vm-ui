@@ -1,5 +1,11 @@
 import { VChildren } from '@gera2ld/jsx-dom';
-import { getHostElement, IHostElementResult, themes, themeCss } from '../util';
+import {
+  classNames,
+  getHostElement,
+  IHostElementResult,
+  themes,
+  themeCss,
+} from '../util';
 import styles, { stylesheet } from './style.module.css';
 
 export interface IToastOptions {
@@ -63,19 +69,21 @@ export function showToast(
   const { dispose, addStyle } = hostElem;
   const body = VM.m(
     <hostElem.id
-      className={[styles.toast, themes[options.theme], options.className]
-        .filter(Boolean)
-        .join(' ')}
+      className={classNames([
+        styles.toast,
+        themes[options.theme],
+        options.className,
+      ])}
     >
       {content}
     </hostElem.id>
-  );
+  ) as HTMLElement;
   hostElem.root.append(body);
   let { style } = options;
   if (typeof style === 'function') style = style(hostElem.id);
   addStyle([stylesheet, themeCss, style].filter(Boolean).join('\n'));
   let closed = false;
-  const result = {
+  const result: IToastResult = {
     ...hostElem,
     tag: 'VM.showToast',
     body,

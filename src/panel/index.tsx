@@ -1,4 +1,10 @@
-import { getHostElement, IHostElementResult, themes, themeCss } from '../util';
+import {
+  classNames,
+  getHostElement,
+  IHostElementResult,
+  themes,
+  themeCss,
+} from '../util';
 import styles, { stylesheet } from './style.module.css';
 
 export interface IPanelOptions {
@@ -61,19 +67,16 @@ export function getPanel(options?: IPanelOptions): IPanelResult {
     ...options,
   };
   const hostElem = getHostElement(options.shadow);
-  let body: HTMLElement;
+  const body = VM.m(
+    <hostElem.id
+      className={classNames([styles['panel-body'], themes[options.theme]])}
+    />
+  ) as HTMLElement;
   const wrapper = VM.m(
-    <hostElem.id className={styles.panel}>
-      <hostElem.id
-        className={[styles['panel-body'], themes[options.theme]]
-          .filter(Boolean)
-          .join(' ')}
-        ref={(el: HTMLElement) => {
-          body = el;
-        }}
-      />
+    <hostElem.id className={classNames([styles.panel, options.className])}>
+      {body}
     </hostElem.id>
-  );
+  ) as HTMLElement;
   let { style } = options;
   if (typeof style === 'function') style = style(hostElem.id);
   hostElem.addStyle([stylesheet, themeCss, style].filter(Boolean).join('\n'));

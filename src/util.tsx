@@ -17,12 +17,12 @@ export interface IHostElementResult {
 
 export function getHostElement(shadow = true): IHostElementResult {
   const id = getUniqueId('vmui-');
-  const host: HTMLElement = VM.m(VM.h(id, { id }));
+  const host = VM.m(VM.h(id, { id })) as HTMLElement;
   let root: ShadowRoot | HTMLElement;
   if (shadow) {
     root = host.attachShadow({ mode: 'open' });
   } else {
-    root = VM.m(VM.h(id));
+    root = VM.m(VM.h(id, {})) as HTMLElement;
     host.append(root);
   }
   const styles: HTMLStyleElement[] = [];
@@ -69,4 +69,8 @@ export function appendToBody(
 
 export function getUniqueId(prefix = '') {
   return prefix + Math.random().toString(36).slice(2, 8);
+}
+
+export function classNames(names: string[]) {
+  return names.filter(Boolean).join(' ');
 }

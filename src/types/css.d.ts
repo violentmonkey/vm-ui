@@ -19,6 +19,3 @@ declare module '*.css' {
   const css: string;
   export default css;
 }
-
-declare const VM: any;
-declare const GM_addStyle: (css: string) => HTMLStyleElement;
