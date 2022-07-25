@@ -53,6 +53,37 @@ $ cd my-script
 $ npx -p https://github.com/violentmonkey/generator-userscript.git -p yo yo @violentmonkey/userscript
 ```
 
+### Toast
+
+```js
+const toast = VM.showToast(<div>hello</div>, {
+  theme: 'dark', // or 'light'
+  duration: 2000, // or 0 to manually close it
+});
+
+// Manually close it
+toast.close();
+```
+
+### Panel
+
+```js
+const panel = VM.getPanel({
+  content: <div>This is a panel</div>,
+  theme: 'light',
+});
+panel.wrapper.style.top = '100px';
+
+// Show panel
+panel.show();
+
+// Hide panel
+panel.hide();
+
+// Allow panel to be moved by mouse dragging
+panel.setMovable(true);
+```
+
 ## API
 
 See [the documentation](https://violentmonkey.github.io/vm-ui/modules.html).
