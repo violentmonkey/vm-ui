@@ -50,27 +50,27 @@ export class Movable {
       right: 'auto',
       bottom: 'auto',
     };
-    const { innerWidth, innerHeight } = window;
+    const { clientWidth, clientHeight } = document.documentElement;
     const width = this.el.offsetWidth;
     const height = this.el.offsetHeight;
-    const left = Math.min(innerWidth - width, Math.max(0, clientX - x));
-    const top = Math.min(innerHeight - height, Math.max(0, clientY - y));
+    const left = Math.min(clientWidth - width, Math.max(0, clientX - x));
+    const top = Math.min(clientHeight - height, Math.max(0, clientY - y));
     const { origin } = this.options;
     if (
       origin.x === 'start' ||
-      (origin.x === 'auto' && left + left + width < innerWidth)
+      (origin.x === 'auto' && left + left + width < clientWidth)
     ) {
       position.left = `${left}px`;
     } else {
-      position.right = `${innerWidth - left - width}px`;
+      position.right = `${clientWidth - left - width}px`;
     }
     if (
       origin.y === 'start' ||
-      (origin.y === 'auto' && top + top + height < innerHeight)
+      (origin.y === 'auto' && top + top + height < clientHeight)
     ) {
       position.top = `${top}px`;
     } else {
-      position.bottom = `${innerHeight - top - height}px`;
+      position.bottom = `${clientHeight - top - height}px`;
     }
     Object.assign(this.el.style, position);
   };
