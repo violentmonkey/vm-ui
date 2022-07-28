@@ -12,19 +12,19 @@ export interface IToastOptions {
   /**
    * The duration for the toast to show.
    */
-  duration?: number;
+  duration: number;
 
   /**
    * Whether to create the toast with ShadowDOM.
    * Note that CSS may not work with ShadowDOM in pages with strict CSP limits.
    */
-  shadow?: boolean;
+  shadow: boolean;
 
   /**
    * Apply built-in themes, default as `light`.
    * Available values are `light` and `dark`, any other value will disable the theme CSS.
    */
-  theme?: string;
+  theme: string;
 
   /**
    * Additional className for the toast root element
@@ -40,12 +40,12 @@ export interface IToastOptions {
   /**
    * Hook before showing the toast, e.g. adding a fade-in transition.
    */
-  beforeEnter: (result: IToastResult) => Promise<void>;
+  beforeEnter?: (result: IToastResult) => Promise<void>;
 
   /**
    * Hook before closing the toast, e.g. adding a fade-out transition.
    */
-  beforeClose: (result: IToastResult) => Promise<void>;
+  beforeClose?: (result: IToastResult) => Promise<void>;
 }
 
 export interface IToastResult extends IHostElementResult {
@@ -55,7 +55,7 @@ export interface IToastResult extends IHostElementResult {
 
 export function showToast(
   content: VChild,
-  options?: IToastOptions
+  options?: Partial<IToastOptions>
 ): IToastResult {
   options = {
     duration: 2000,
