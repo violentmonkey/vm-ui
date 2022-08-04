@@ -1,8 +1,9 @@
-if (typeof VM === 'object') {
-  VM.versions = Object.assign({}, VM.versions, {
+export const versions = Object.assign(
+  (typeof VM !== 'undefined' && VM?.versions) || {},
+  {
     ui: 'process.env.VERSION',
-  });
-}
+  }
+);
 
 if (typeof VM === 'undefined' || VM?.versions?.dom?.split('.')[0] !== '2') {
   throw new Error(`\

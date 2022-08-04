@@ -11,8 +11,5 @@
     "jsxFactory": "VM.h",
     "jsxFragmentFactory": "VM.Fragment"
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }
