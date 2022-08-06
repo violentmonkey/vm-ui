@@ -50,7 +50,7 @@ export interface IPanelResult extends IHostElementResult {
    */
   body: HTMLElement;
   /**
-   * Empty the panel body, shorthand for `panel.body.innerHTML = ''`.
+   * Empty the panel body.
    */
   clear: () => void;
   /**
@@ -89,7 +89,7 @@ export function getPanel(options?: IPanelOptions): IPanelResult {
   hostElem.addStyle([stylesheet, themeCss, style].filter(Boolean).join('\n'));
   hostElem.root.append(wrapper);
   const clear = () => {
-    body.innerHTML = '';
+    while (body.firstChild) body.firstChild.remove();
   };
   const append = (...args: VChild[]) => {
     body.append(...args.map(VM.m).filter(Boolean));
