@@ -64,7 +64,7 @@ export interface IPanelResult extends IHostElementResult {
   /**
    * Whether this panel can be moved by mouse dragging.
    */
-  setMovable: (toggle: boolean) => void;
+  setMovable: (toggle: boolean, options?: MovableOptions) => void;
 }
 
 export function getPanel(options?: IPanelOptions): IPanelResult {
@@ -101,9 +101,9 @@ export function getPanel(options?: IPanelOptions): IPanelResult {
   if (options.content) setContent(options.content);
 
   let movable: Movable;
-  const setMovable = (toggle: boolean, options?: MovableOptions) => {
+  const setMovable: IPanelResult['setMovable'] = (toggle, options) => {
     movable ||= new Movable(wrapper);
-    if (origin) movable.setOptions(options);
+    if (options) movable.setOptions(options);
     if (toggle) {
       movable.enable();
     } else {
