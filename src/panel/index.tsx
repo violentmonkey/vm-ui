@@ -1,4 +1,5 @@
 import { VChild } from '@gera2ld/jsx-dom';
+import { m } from '@violentmonkey/dom';
 import {
   classNames,
   getHostElement,
@@ -64,7 +65,7 @@ export interface IPanelResult extends IHostElementResult {
   /**
    * Whether this panel can be moved by mouse dragging.
    */
-  setMovable: (toggle: boolean, options?: MovableOptions) => void;
+  setMovable: (toggle: boolean, options?: Partial<MovableOptions>) => void;
 }
 
 export function getPanel(options?: IPanelOptions): IPanelResult {
@@ -74,12 +75,12 @@ export function getPanel(options?: IPanelOptions): IPanelResult {
     ...options,
   };
   const hostElem = getHostElement(options.shadow);
-  const body = VM.m(
+  const body = m(
     <hostElem.id
       className={classNames([styles['panel-body'], themes[options.theme]])}
     />
   ) as HTMLElement;
-  const wrapper = VM.m(
+  const wrapper = m(
     <hostElem.id className={classNames([styles.panel, options.className])}>
       {body}
     </hostElem.id>
@@ -92,7 +93,7 @@ export function getPanel(options?: IPanelOptions): IPanelResult {
     while (body.firstChild) body.firstChild.remove();
   };
   const append = (...args: VChild[]) => {
-    body.append(...args.map(VM.m).filter(Boolean));
+    body.append(...args.map(m).filter(Boolean));
   };
   const setContent = (...args: VChild[]) => {
     clear();

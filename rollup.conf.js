@@ -9,7 +9,7 @@ const DIST = defaultOptions.distDir;
 const FILENAME = 'index';
 const BANNER = `/*! ${pkg.name} v${pkg.version} | ${pkg.license} License */`;
 
-const external = getRollupExternal();
+const external = getRollupExternal(['@violentmonkey/dom']);
 const bundleOptions = {
   extend: true,
   esModule: false,
@@ -46,11 +46,15 @@ const rollupConfig = [
         extensions: defaultOptions.extensions,
         postcss: postcssOptions,
       }),
+      external,
     },
     output: {
       format: 'umd',
       file: `${DIST}/${FILENAME}.js`,
       name: 'VM',
+      globals: {
+        '@violentmonkey/dom': 'VM',
+      },
       ...bundleOptions,
     },
   },

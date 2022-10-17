@@ -1,3 +1,4 @@
+import { m, h } from '@violentmonkey/dom';
 import baseCss from './base.css';
 import themes, { stylesheet as themeCss } from './theme.module.css';
 
@@ -18,12 +19,12 @@ export interface IHostElementResult {
 
 export function getHostElement(shadow = true): IHostElementResult {
   const id = getUniqueId('vmui-');
-  const host = VM.m(VM.h(id, { id })) as HTMLElement;
+  const host = m(h(id, { id })) as HTMLElement;
   let root: ShadowRoot | HTMLElement;
   if (shadow) {
     root = host.attachShadow({ mode: 'open' });
   } else {
-    root = VM.m(VM.h(id, {})) as HTMLElement;
+    root = m(h(id, {})) as HTMLElement;
     host.append(root);
   }
   const styles: HTMLStyleElement[] = [];
@@ -31,7 +32,7 @@ export function getHostElement(shadow = true): IHostElementResult {
     if (!shadow && typeof GM_addStyle === 'function') {
       styles.push(GM_addStyle(css.replace(/:host\b/g, `#${id} `)));
     } else {
-      root.append(VM.m(<style>{css}</style>));
+      root.append(m(<style>{css}</style>));
     }
   };
   const dispose = () => {

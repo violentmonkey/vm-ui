@@ -1,4 +1,5 @@
 import { VChild } from '@gera2ld/jsx-dom';
+import { m } from '@violentmonkey/dom';
 import {
   classNames,
   getHostElement,
@@ -67,7 +68,7 @@ export function showToast(
   };
   const hostElem = getHostElement(options.shadow);
   const { dispose, addStyle } = hostElem;
-  const body = VM.m(
+  const body = m(
     <hostElem.id
       className={classNames([
         styles.toast,

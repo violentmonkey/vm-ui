@@ -1,7 +1,5 @@
-import * as dom from '@violentmonkey/dom';
-
 declare global {
-  const VM: typeof dom & {
+  const VM: {
     versions: Record<string, string>;
   };
 
@@ -16,3 +14,5 @@ declare global {
 
   const GM_addStyle: (css: string) => HTMLStyleElement;
 }
+
+export {};
