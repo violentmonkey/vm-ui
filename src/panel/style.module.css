@@ -4,11 +4,9 @@
   color: #333;
 }
 
-.panel-body {
+.body {
   position: relative;
   display: block;
   padding: 8px;
-  border: 1px solid #eaeaea;
-  background-color: #fff;
   word-break: break-word;
 }

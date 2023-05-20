@@ -76,9 +76,7 @@ export function getPanel(options?: IPanelOptions): IPanelResult {
   };
   const hostElem = getHostElement(options.shadow);
   const body = m(
-    <hostElem.id
-      className={classNames([styles['panel-body'], themes[options.theme]])}
-    />
+    <hostElem.id className={classNames([styles.body, themes[options.theme]])} />
   ) as HTMLElement;
   const wrapper = m(
     <hostElem.id className={classNames([styles.panel, options.className])}>
