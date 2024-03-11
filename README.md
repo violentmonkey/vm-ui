@@ -26,7 +26,55 @@ VM.showToast('hello');
 VM.showToast(VM.h('div', {}, 'hello, world'));
 ```
 
-Or use with JSX and bundlers, for example:
+### Toast
+
+```js
+const toast = VM.showToast(VM.h('div', {}, 'hello'), {
+  theme: 'dark', // or 'light'
+  duration: 2000, // or 0 to manually close it
+});
+
+// Manually close it
+toast.close();
+```
+
+### Panel
+
+```js
+const panel = VM.getPanel({
+  content: VM.h('div', {}, 'This is a panel'),
+  theme: 'light',
+});
+panel.wrapper.style.top = '100px';
+
+// Show panel
+panel.show();
+
+// Hide panel
+panel.hide();
+
+// Allow panel to be moved by mouse dragging
+panel.setMovable(true);
+```
+
+### SolidJS
+
+It is recommended to initialize a userscript project using [generator-userscript](https://github.com/violentmonkey/generator-userscript) and use [solid-js](https://solidjs.com/).
+
+```js
+import { render } from 'solid-js/web';
+
+const panel = VM.getPanel({ theme: 'light' });
+panel.wrapper.style.top = '100px';
+render(() => <MyPanel />, panel.body);
+panel.show();
+```
+
+### JSX for @violentmonkey/dom
+
+**Not recommended** as it is not compatible with [solid-js](https://solidjs.com/) integrated in [generator-userscript](https://github.com/violentmonkey/generator-userscript).
+
+Use with JSX and bundlers, for example:
 
 ```js
 // .babelrc.js
@@ -45,45 +93,6 @@ Or use with JSX and bundlers, for example:
 VM.showToast(<div>hello, world</div>);
 ```
 
-To initialize a project for userscript with JSX support, try [generator-userscript](https://github.com/violentmonkey/generator-userscript):
-
-```sh
-$ mkdir my-script
-$ cd my-script
-$ npx -p https://github.com/violentmonkey/generator-userscript.git -p yo yo @violentmonkey/userscript
-```
-
-### Toast
-
-```js
-const toast = VM.showToast(<div>hello</div>, {
-  theme: 'dark', // or 'light'
-  duration: 2000, // or 0 to manually close it
-});
-
-// Manually close it
-toast.close();
-```
-
-### Panel
-
-```js
-const panel = VM.getPanel({
-  content: <div>This is a panel</div>,
-  theme: 'light',
-});
-panel.wrapper.style.top = '100px';
-
-// Show panel
-panel.show();
-
-// Hide panel
-panel.hide();
-
-// Allow panel to be moved by mouse dragging
-panel.setMovable(true);
-```
-
 ## API
 
-See [the documentation](https://violentmonkey.github.io/vm-ui/modules.html).
+[![jsDocs.io](https://img.shields.io/badge/jsDocs.io-reference-blue)](https://www.jsdocs.io/package/@violentmonkey/ui)
