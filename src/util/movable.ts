@@ -19,7 +19,10 @@ export class Movable {
 
   private options: MovableOptions;
 
-  constructor(private el: HTMLElement, options?: Partial<MovableOptions>) {
+  constructor(
+    private el: HTMLElement,
+    options?: Partial<MovableOptions>,
+  ) {
     this.setOptions(options);
   }
 

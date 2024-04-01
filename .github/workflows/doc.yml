@@ -10,27 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          persist-credentials: false
-          fetch-depth: 100
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
+          node-version: '20'
       - uses: marceloprado/has-changed-path@v1
         id: changed-src
         with:
           paths: package.json src
-      - uses: pnpm/action-setup@v2.0.1
+      - uses: pnpm/action-setup@v3
         if: steps.changed-src.outputs.changed == 'true'
         with:
-          version: 7
+          version: 8
       - name: Build docs
         if: steps.changed-src.outputs.changed == 'true'
         run: pnpm i && pnpm build:docs
       - name: Deploy to GitHub Pages
         if: steps.changed-src.outputs.changed == 'true'
-        uses: JamesIves/github-pages-deploy-action@4.0.0
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: docs

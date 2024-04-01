@@ -56,7 +56,7 @@ export interface IToastResult extends IHostElementResult {
 
 export function showToast(
   content: VChild,
-  options?: Partial<IToastOptions>
+  options?: Partial<IToastOptions>,
 ): IToastResult {
   options = {
     duration: 2000,
@@ -77,7 +77,7 @@ export function showToast(
       ])}
     >
       {content}
-    </hostElem.id>
+    </hostElem.id>,
   ) as HTMLElement;
   hostElem.root.append(body);
   let { style } = options;
